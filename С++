@@ -1,19 +1,56 @@
-21ghibswacfj whivb e21
-e231 
-413
- 4
-134
-31 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 
-4
- 1
-413
-4 1
- 1
+class CardDeck {
+public:
+    CardDeck() {
+        
+        const std::string suits[] = {"Черви", "Буби", "Пики", "Крести"};
+        const std::string ranks[] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз"};
 
-414
-1
-14
-241 
-1
+        for (const auto& suit : suits) {
+            for (const auto& rank : ranks) {
+                deck.push_back(rank + " " + suit);
+            }
+        }
 
+        
+        std::srand(static_cast<unsigned int>(std::time(0))); 
+        std::random_shuffle(deck.begin(), deck.end());
+    }
+
+    std::string drawCard() {
+        if (deck.empty()) {
+            return "нет больше карт";
+        }
+        std::string card = deck.back(); 
+        deck.pop_back(); 
+        return card;
+    }
+
+private:
+    std::vector<std::string> deck; 
+};
+
+int main() {
+    CardDeck cardDeck; 
+    std::string input;
+
+    for (int i = 0; i < 53; ++i) { 
+        std::cout << "Нажмите Enter для получения карты...";
+        std::getline(std::cin, input); 
+
+        std::string card = cardDeck.drawCard(); 
+        std::cout << card << std::endl; 
+
+        if (card == "нет больше карт") {
+            break; 
+        }
+    }
+
+    return 0;
+}
+_______________________________________________________________________________________________________
